@@ -203,6 +203,8 @@ func (p *Provider) ReleasePromote(app, id string, opts structs.ReleasePromoteOpt
 		return err
 	}
 
+	fmt.Println(cs)
+
 	tp := map[string]interface{}{
 		"App":          r.App,
 		"Certificates": cs,

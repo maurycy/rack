@@ -219,14 +219,14 @@
           }
         },
         {{ if .Domain }}
-          "BalancerListenerCertificate": {
-            "Type": "AWS::ElasticLoadBalancingV2::ListenerCertificate",
-            "Properties": {
-              "Certificates": [ { "CertificateArn": { "Ref": "Certificate" } } ],
-              "ListenerArn": { "Fn::ImportValue": { "Fn::Sub": "${Rack}:{{ router .Name $.Manifest }}Listener443" } }
-            }
-          },
           {{ range $i, $domain := .Domains }}
+            "BalancerListenerCertificate{{$i}}": {
+              "Type": "AWS::ElasticLoadBalancingV2::ListenerCertificate",
+              "Properties": {
+                "Certificates": [ { "CertificateArn": { "Ref": "Certificate" } } ],
+                "ListenerArn": { "Fn::ImportValue": { "Fn::Sub": "${Rack}:{{ router .Name $.Manifest }}Listener443" } }
+              }
+            },
             "BalancerListenerRule80Domain{{$i}}": {
               "Type": "AWS::ElasticLoadBalancingV2::ListenerRule",
               {{ if gt $i 0 }}

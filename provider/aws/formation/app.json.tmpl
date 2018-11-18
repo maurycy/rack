@@ -264,7 +264,11 @@
               "Certificate": { "Fn::ImportValue": { "Fn::Sub": "${Rack}:RouterCertificate" } },
             {{ end }}
           {{ else if $existing := certificate $.Certificates .Domains }}
-            "Certificate": "{{$existing}}",
+            "Certificate": [
+            {{ range $i, cert := certificates $.Certificates .Domains }}
+              "{{$cert}}",
+            {{ end }}
+            ],
           {{ else }}
             "Certificate": { "Ref": "Balancer{{ upper .Name }}Certificate" },
           {{ end }}

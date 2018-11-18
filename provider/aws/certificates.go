@@ -124,6 +124,8 @@ func (p *Provider) CertificateGenerate(domains []string) (*structs.Certificate, 
 		DomainName: aws.String(domains[0]),
 	}
 
+	fmt.Println(alts)
+
 	if len(alts) > 0 {
 		req.SubjectAlternativeNames = alts
 	}
@@ -199,6 +201,8 @@ func (p *Provider) CertificateList() (structs.Certificates, error) {
 		return nil, err
 	}
 
+	fmt.Println(ares)
+
 	for _, cert := range ares {
 		tags := map[string]string{}
 
@@ -208,6 +212,8 @@ func (p *Provider) CertificateList() (structs.Certificates, error) {
 		if err != nil {
 			return nil, err
 		}
+
+		fmt.Println(tres)
 
 		for _, t := range tres.Tags {
 			tags[*t.Key] = *t.Value
@@ -221,6 +227,8 @@ func (p *Provider) CertificateList() (structs.Certificates, error) {
 		if err != nil {
 			return nil, err
 		}
+
+		fmt.Println(c)
 
 		if c != nil {
 			certs = append(certs, *c)
@@ -279,6 +287,8 @@ func (p *Provider) certificateGetACM(arn string) (*structs.Certificate, error) {
 	for i, san := range res.Certificate.SubjectAlternativeNames {
 		c.Domains[i] = *san
 	}
+
+	fmt.Println(c)
 
 	return c, nil
 }

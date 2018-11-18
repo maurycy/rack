@@ -426,10 +426,14 @@ func (s *Server) CertificateGenerate(c *stdapi.Context) error {
 
 	domains := strings.Split(c.Value("domains"), ",")
 
+	// fmt.Println(domains)
+
 	v, err := s.provider(c).CertificateGenerate(domains)
 	if err != nil {
 		return err
 	}
+
+	// fmt.Println(v)
 
 	if vs, ok := interface{}(v).(Sortable); ok {
 		sort.Slice(v, vs.Less)

@@ -83,6 +83,9 @@ func CertsGenerate(rack sdk.Interface, c *stdcli.Context) error {
 		return err
 	}
 
+	fmt.Printf(stdout, "maurycy: certs.CertsGenerate")
+	fmt.Printf(stdout, cr)
+
 	c.OK(cr.Id)
 
 	if c.Bool("id") {
